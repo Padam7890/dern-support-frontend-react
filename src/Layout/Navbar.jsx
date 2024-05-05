@@ -8,17 +8,23 @@ import { IoTrendingUp } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 
+import { FiBookOpen } from "react-icons/fi";
 
 const navmenu = [
-  {
-    name: "Customer",
-    path: "/",
-    icon: <FaUserGroup size={20} />,
-  },
   {
     name: "Request",
     path: "/",
     icon: <IoTicket size={20} />,
+  },
+  {
+    name: "Articles",
+    path: "/",
+    icon: <FiBookOpen size={20} />,
+  },
+  {
+    name: "Customer",
+    path: "/",
+    icon: <FaUserGroup size={20} />,
   },
   {
     name: "Repair Job",
@@ -42,7 +48,6 @@ const navmenu = [
     path: "/",
     icon: <IoTrendingUp size={20} />,
   },
-
 ];
 
 export { navmenu };

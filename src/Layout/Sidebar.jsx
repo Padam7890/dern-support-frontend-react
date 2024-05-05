@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { navmenu } from "./Navbar";
 import { FaRegUser } from "react-icons/fa6";
 import { IoIosSettings } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
+import logo from "../assets/logo.svg";
+import { useNavigate } from "react-router";
 
 const Sidebar = () => {
+  const nav = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      nav("/login");
+    } else {
+      nav("/");
+    }
+  }, []);
   return (
     <div>
       <aside
@@ -13,6 +23,9 @@ const Sidebar = () => {
         aria-label="Sidebar"
       >
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 pl-10 dark:bg-gray-800">
+          <div className="logo flex items-center justify-center my-4">
+            <img className=" w-40" src={logo} alt="" />
+          </div>
           <ul class="space-y-2 font-medium">
             <li>
               <a
