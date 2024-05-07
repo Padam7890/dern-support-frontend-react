@@ -4,6 +4,7 @@ import RegisterUser from "../Pages/User/RegisterUser";
 import Login from "../Pages/User/Login";
 import NotfoundPage from "../Pages/NotfoundPage";
 import RequestCreate from "../Pages/Request/RequestCreate";
+import RequestIndex from "../Pages/Request/RequestIndex";
 
 const router = createBrowserRouter([
   {
@@ -11,8 +12,12 @@ const router = createBrowserRouter([
     element: <Layout />,
      children:[
       {
-        path: "/Request",
+        path: "/Request/create",
         element: <RequestCreate/>,
+      },
+      {
+        path: "/Request",
+        element: <RequestIndex/>,
       }
      ]
   },
