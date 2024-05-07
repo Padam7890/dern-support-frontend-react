@@ -10,6 +10,7 @@ const Input = ({
   onChange,
   onBlur,
   multiple,
+  divclassName,
   className,
   placeholder,
   title,
@@ -18,7 +19,7 @@ const Input = ({
   ...props
 }) => {
   return (
-    <div className={`mb-5 ${className} `}>
+    <div className={`mb-5 ${divclassName} `}>
       <label
         htmlFor={name}
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"

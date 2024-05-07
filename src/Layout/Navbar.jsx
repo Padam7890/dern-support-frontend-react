@@ -13,7 +13,7 @@ import { FiBookOpen } from "react-icons/fi";
 const navmenu = [
   {
     name: "Request",
-    path: "/",
+    path: "/Request",
     icon: <IoTicket size={20} />,
   },
   {

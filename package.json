@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.3.1",
+    "@ckeditor/ckeditor5-react": "^6.3.0",
     "axios": "^1.6.8",
+    "ckeditor5": "^41.3.1",
     "formik": "^2.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -18,6 +21,7 @@
     "react-recaptcha": "^2.3.10",
     "react-router-dom": "^6.23.0",
     "react-select": "^5.8.0",
+    "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
     "yup": "^1.4.0"
   },
