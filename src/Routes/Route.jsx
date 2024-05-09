@@ -5,6 +5,7 @@ import Login from "../Pages/User/Login";
 import NotfoundPage from "../Pages/NotfoundPage";
 import RequestCreate from "../Pages/Request/RequestCreate";
 import RequestIndex from "../Pages/Request/RequestIndex";
+import ViewRequest from "../Pages/Request/ViewRequest";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/Request",
         element: <RequestIndex/>,
+      },
+      {
+        path: "/Request/view/:id",
+        element: <ViewRequest/>,
       }
      ]
   },

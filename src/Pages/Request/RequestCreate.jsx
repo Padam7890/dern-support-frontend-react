@@ -1,53 +1,38 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Input from "../../Components/Input";
 import Button from "../../Components/Button";
 import Ckeditiors from "../../Components/Ckeditiors";
-import { boolean, date, object, string } from "yup";
-import * as Yup from "yup";
+import { initialValues, validationSchema } from "./Schema";
+import http from "../../Utils/http";
 
 const RequestCreate = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const initialValues = {
-    description: "",
-    isRepair: false,
-    productName: "",
-    scheduledDate: "",
-    address: "",
-  };
-  
-  const validationSchema = Yup.object().shape({
-    description: Yup.string()
-      .required("Please enter a description")
-      .min(20, "Description must be at least 20 characters")
-      .max(1000, "Description must be at most 1000 characters"),
-    isRepair: Yup.boolean(),
-    productName: Yup.string().when('isRepair', {
-      is: true,
-      then:() => Yup.string().required("Please enter a product name"),
-    }),
-    scheduledDate: Yup.date().when('isRepair', {
-      is: true,
-      then:()=> Yup.date().required("Please enter a scheduled date"),
-    }),
-    address: Yup.string().when('isRepair', {
-      is: true,
-      then:()=> Yup.string().required("Please enter an address"),
-    }),
-  });
-
   const formik = useFormik({
-    initialValues,
-    validationSchema,
+    initialValues: initialValues,
+    validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
       //   const data = bannerdata(values);
-      //   apisendata(data);
+      apisendata(values);
     },
   });
+  const apisendata = async (data) => {
+    try {
+      setIsLoading(true);
+      const res = await http.post("/request", data);
+      console.log(res);
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className=" relative w-full h-full">
