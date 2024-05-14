@@ -17,6 +17,13 @@ const navmenu = [
     icon: <IoTicket size={20} />,
   },
   {
+    name: "Repair Job",
+    path: "/repair",
+    message: 5,
+
+    icon: <GiAutoRepair size={20} />,
+  },
+  {
     name: "Articles",
     path: "/",
     icon: <FiBookOpen size={20} />,
@@ -26,13 +33,7 @@ const navmenu = [
     path: "/",
     icon: <FaUserGroup size={20} />,
   },
-  {
-    name: "Repair Job",
-    path: "/",
-    message: 5,
-
-    icon: <GiAutoRepair size={20} />,
-  },
+ 
   {
     name: "Spare Part",
     path: "/",

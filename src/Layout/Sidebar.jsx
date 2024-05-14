@@ -16,6 +16,13 @@ const Sidebar = () => {
       nav("/");
     }
   }, []);
+
+  const logout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    nav("/login");
+  };
   return (
     <div>
       <aside
@@ -49,7 +56,8 @@ const Sidebar = () => {
 
             {navmenu.map((nav, i) => (
               <li>
-                <NavLink to={nav.path}
+                <NavLink
+                  to={nav.path}
                   href="#"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
@@ -63,7 +71,9 @@ const Sidebar = () => {
                     {nav.icon}
                   </svg>
 
-                  <span className="flex-1 ms-3 whitespace-nowrap">{nav.name}</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap">
+                    {nav.name}
+                  </span>
                   {nav.message && (
                     <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
                       {nav.message}
@@ -110,7 +120,7 @@ const Sidebar = () => {
             </li>
             <li>
               <a
-                href="#"
+                onClick={(e) => logout(e)}
                 className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
               >
                 <svg
