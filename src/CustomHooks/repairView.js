@@ -24,8 +24,6 @@ const useRepairView = () => {
        setIsLoading(false);
      }
    }
-
-   
    
    return { repairList, setrepairList, isLoading, error, fetchRepairLists };
 }

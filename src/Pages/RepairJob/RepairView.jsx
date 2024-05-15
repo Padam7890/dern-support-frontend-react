@@ -55,20 +55,21 @@ const RepairView = () => {
 
   return (
     <div>
-      <div className="h-auto relative max-w-[800px] p-5 flex flex-col gap-7 bg-white shadow-md rounded-sm">
-        <ToastContainer />
-
+      <div className="h-auto relative  p-5 flex  gap-10 bg-white shadow-md rounded-sm">
+        
+        <div className="w-[60%] flex flex-col "><ToastContainer />
         {loading && (
           <div className="bg-slate-800 bg-opacity-40 w-full h-full absolute z-30 top-0 left-0 flex justify-center items-center">
             <ClipLoader color={"#008000"} size={120} />
           </div>
         )}
-
         <div>
-          <h1 className="text-base font-semibold text-gray-500">Repair Items</h1>
+          <h1 className="text-base font-semibold text-gray-500">
+            Repair Items
+          </h1>
         </div>
-
-        {/* Your repair items details */} <div className=" border py-3 flex flex-col gap-5">
+        {/* Your repair items details */}{" "}
+        <div className=" border py-3 flex mt-5 flex-col gap-5">
           <div className=" grid grid-cols-2 p-4 border-b-[1px]   ">
             <div className=" flex gap-4 items-center">
               <p className=" text-sm  font-medium text-gray-700">
@@ -110,12 +111,12 @@ const RepairView = () => {
             </div>
           </div>
         </div>
-
-
         {/* Status update form */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col mt-6 gap-4">
           <div>
-            <h1 className="text-base font-semibold text-gray-500">Status Update</h1>
+            <h1 className="text-base font-semibold text-gray-500">
+              Status Update
+            </h1>
           </div>
           <form
             encType="multipart/form-data"
@@ -129,7 +130,9 @@ const RepairView = () => {
               onChange={(status) => {
                 formik.setFieldValue("status", status.value);
               }}
-              value={status.find((option) => option.value === formik.values.status)}
+              value={status.find(
+                (option) => option.value === formik.values.status
+              )}
               className="mt-2"
             >
               <option value="" disabled>
@@ -155,13 +158,13 @@ const RepairView = () => {
             </Button>
           </form>
         </div>
-
+        </div>
         {/* Render the RepairMail component */}
-        <div>
+        <div className="w-[30%]">
           <RepairMail
-          repairs={repairList?.supportRequest.user}
-          setLoading={setLoading}
-                     />
+            repairs={repairList?.supportRequest.user}
+            setLoading={setLoading}
+          />
         </div>
       </div>
     </div>

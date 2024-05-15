@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const http = axios.create({
   // baseURL: "https://api-ecommerce-app-express.vercel.app/"
   baseURL: "http://127.0.0.1:3000/",
+  withCredentials: true,
 });
 
 // Add a request interceptor

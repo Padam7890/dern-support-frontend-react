@@ -57,7 +57,7 @@ const ViewRequest = () => {
   const converteddesc = request?.description && parse(request.description);
 
   return (
-    <div className=" relative h-full">
+    <div className=" relative h-full bg-white pl-9 ">
       {loading && (
         <div className="bg-slate-800 bg-opacity-40 w-full h-full absolute z-30 top-0 left-0 flex justify-center items-center">
           <ClipLoader color={"#008000"} size={120} />
@@ -109,7 +109,7 @@ const ViewRequest = () => {
         </div>
 
         {request && request.status === "Submitted"  && (
-          <div>
+          <div className=" border p-5 shadow rounded-lg ">
             <form
               encType="multipart/form-data"
               className=" max-w-2xl mx-auto w-full "

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import http from "../Utils/http";
+import Cookies from 'js-cookie';
 
 const useRepair = () => {
    const [repairList, setrepairList] = useState([]);
@@ -8,7 +9,10 @@ const useRepair = () => {
 
    useEffect(() => {
     fetchRepairLists();
+   const cookies =  Cookies.get('LOGIN_INFO') // `domain` won't have any effect...!   console.log(cookies)
+    console.log(cookies)
    }, []);
+
 
    const fetchRepairLists = async () => {
      try {
@@ -21,7 +25,6 @@ const useRepair = () => {
      }
    }
 
-   
    
    return { repairList, setrepairList, isLoading, error, fetchRepairLists };
 }

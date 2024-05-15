@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import TableHeading from "../../Components/Table/TableHeading";
 import Table from "../../Components/Table/Table";
@@ -21,7 +21,10 @@ const RepairIndex = () => {
     return <div>Error: {error.message}</div>;
   }
   console.log(repairList)
+  
  
+
+
   return (
     <div className=" relative w-full h-full">
       <ToastContainer />
