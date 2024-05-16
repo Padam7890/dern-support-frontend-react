@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+
 
 // Create an Axios instance with default configurations
 const http = axios.create({
@@ -31,15 +33,15 @@ http.interceptors.response.use(
 
       try {
         // Get the refresh token from local storage
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (!refreshToken) {
-          // If refresh token is not available, redirect to login
+        const checkCookies = Cookies.get('USER_INFO')
+        if (!checkCookies || checkCookies === null) {
+          // If Cookies is not available, redirect to login
           redirectToLogin();
+          console.log("cookies not available")
           return Promise.reject(error);
         }
-
         // Attempt to refresh the access token
-        const refreshResponse = await http.patch(`/auth/refresh_token/${refreshToken}`);
+        const refreshResponse = await http.patch(`/auth/refresh_token/${checkCookies}`);
         const { accessToken } = refreshResponse.data;
 
         // Store the new access token in local storage

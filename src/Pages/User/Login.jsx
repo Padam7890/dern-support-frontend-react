@@ -8,6 +8,7 @@ import Recaptcha from "react-recaptcha";
 import http from "../../Utils/http";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const nav = useNavigate();
@@ -35,11 +36,8 @@ const Login = () => {
   });
   useEffect(() => {
     checktoken();
-    const val = localStorage.getItem("accessToken");
-    if (!val || isTokenExpired) {
+    if (isTokenExpired) {
       nav("/login");
-    } else {
-      nav("/");
     }
   }, []);
 
@@ -60,7 +58,9 @@ const Login = () => {
       const res = await http.post("/auth/login", values);
       const { accessToken, refreshToken } = res.data;
       localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+      Cookies.set("USER_INFO", JSON.stringify(refreshToken), {
+        expires: 7,
+      });
       console.log(res);
       nav("/");
     } catch (error) {
@@ -126,7 +126,7 @@ const Login = () => {
                   <p>{formik.errors.recaptcha}</p>
                 )}
               </div> */}
-            
+
               <Button
                 type="submit"
                 className=" mt-5 bg-pink-500 hover:bg-pink-600"
@@ -140,7 +140,7 @@ const Login = () => {
                 Forgot password?
               </NavLink>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-              Don’t have an account yet?{" "}
+                Don’t have an account yet?{" "}
                 <NavLink to={"/register"}>
                   <a
                     href="#"
