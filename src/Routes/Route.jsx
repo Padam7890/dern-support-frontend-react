@@ -9,6 +9,8 @@ import ViewRequest from "../Pages/Request/ViewRequest";
 import RepairIndex from "../Pages/RepairJob/RepairIndex";
 import RepairView from "../Pages/RepairJob/RepairView";
 import ArticleIndex from "../Pages/Articles/ArticleIndex";
+import ArticleCrreate from "../Pages/Articles/ArticleCrreate";
+import ArticleEdit from "../Pages/Articles/ArticleEdit";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
       {
         path: "/articles",
         element: <ArticleIndex/>,
+      },
+      {
+        path: "/article/create",
+        element: <ArticleCrreate/>,
+      },
+      {
+        path: "/article/edit/:id",
+        element: <ArticleEdit/>,
       },
      ]
   },
