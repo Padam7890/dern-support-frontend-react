@@ -40,7 +40,7 @@ const RepairMail = ({ repairs, setLoading }) => {
   };
   console.log(formik.values.email);
   return (
-    <div>
+    <div className=" w-full h-full">
 
       <h1 className="text-base   font-semibold text-gray-500">Send Email</h1>
       <section class="bg-white dark:bg-gray-900">
@@ -57,6 +57,7 @@ const RepairMail = ({ repairs, setLoading }) => {
                 type="email"
                 id="email"
                 name="email"
+                readOnly={true}
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}

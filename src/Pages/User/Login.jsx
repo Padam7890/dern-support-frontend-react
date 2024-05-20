@@ -35,8 +35,13 @@ const Login = () => {
     },
   });
   useEffect(() => {
+    let isAuth = localStorage.getItem("accessToken");
     checktoken();
     if (isTokenExpired) {
+      nav("/login");
+    } else if (isAuth && isAuth !== null) {
+      nav("/");
+    } else {
       nav("/login");
     }
   }, []);

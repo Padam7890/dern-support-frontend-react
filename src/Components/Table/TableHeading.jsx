@@ -3,10 +3,7 @@ import Button from "../Button";
 
 const TableHeading = ({
   deleteSelectedProducts,
-  items,
-  setItems,
-  fetchItemList,
-  searchfor
+  searchRequests
 }) => {
   const [openBtn, setopenBtn] = useState(false);
 
@@ -15,26 +12,9 @@ const TableHeading = ({
     console.log("tooglebtn");
   }
 
-  //filter items
-  const filteritems = async (query) => {
-    console.log(query + "query");
-    if (query) {
-      let filteredItems = items.filter((item) =>
-        item[searchfor].toLowerCase().includes(query.toLowerCase())
-      );
-      setItems(filteredItems);
-    }
-    if (query.length === 0) {
-      try {
-        await fetchItemList();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
   const itemchange = (e) => {
-    filteritems(e.target.value);
+    searchRequests(e.target.value);
   };
 
   return (

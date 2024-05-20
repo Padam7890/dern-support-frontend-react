@@ -57,7 +57,7 @@ const RepairView = () => {
     <div>
       <div className="h-auto relative  p-5 flex  gap-10 bg-white shadow-md rounded-sm">
         
-        <div className="w-[60%] flex flex-col "><ToastContainer />
+        <div className="w-[60%] flex flex-col ">
         {loading && (
           <div className="bg-slate-800 bg-opacity-40 w-full h-full absolute z-30 top-0 left-0 flex justify-center items-center">
             <ClipLoader color={"#008000"} size={120} />

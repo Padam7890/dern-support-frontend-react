@@ -7,8 +7,11 @@ import Button from "../../Components/Button";
 import Ckeditiors from "../../Components/Ckeditiors";
 import { initialValues, validationSchema } from "./Schema";
 import http from "../../Utils/http";
+import TextArea from "../../Components/TextArea";
+import { useNavigate } from "react-router";
 
 const RequestCreate = () => {
+  const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
@@ -26,6 +29,7 @@ const RequestCreate = () => {
       const res = await http.post("/request", data);
       console.log(res);
       toast.success(res.data.message);
+      nav('/Request')
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);
@@ -36,8 +40,6 @@ const RequestCreate = () => {
 
   return (
     <div className=" relative w-full h-full">
-      <ToastContainer />
-
       {isLoading && (
         <div className="bg-slate-800 bg-opacity-40 w-full h-full absolute z-30 top-0 left-0 flex justify-center items-center">
           <ClipLoader color={"#008000"} size={120} />
@@ -50,11 +52,17 @@ const RequestCreate = () => {
         onSubmit={formik.handleSubmit}
       >
         <div className="mb-5 w-full">
-          <Ckeditiors
-            title="Message"
+          <TextArea
+          title={"Message"}
+            id="description"
             formik={formik}
-            name="description"
-            placeholder="Message description"
+            name={"description"}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.description}
+            rows="6"
+            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="Leave a Message..."
           />
         </div>
         <div className={`flex flex-col gap-4`}>

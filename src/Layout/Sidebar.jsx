@@ -6,23 +6,25 @@ import { CiLogout } from "react-icons/ci";
 import logo from "../assets/logo.svg";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const Sidebar = () => {
   const nav = useNavigate();
   useEffect(() => {
-    if (!localStorage.getItem("accessToken")) {
-      nav("/login");
-    } else {
+    if (localStorage.getItem("accessToken")) {
       nav("/");
+    } else {
+      nav("/login");
     }
   }, []);
 
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
     nav("/login");
   };
+
+  
   return (
     <div>
       <aside
@@ -34,6 +36,7 @@ const Sidebar = () => {
           <div className="logo flex items-center justify-center my-4">
             <img className=" w-40" src={logo} alt="" />
           </div>
+
           <ul className="space-y-2 font-medium">
             <li>
               <a

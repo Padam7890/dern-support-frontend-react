@@ -25,7 +25,7 @@ const navmenu = [
   },
   {
     name: "Articles",
-    path: "/",
+    path: "/articles",
     icon: <FiBookOpen size={20} />,
   },
   {

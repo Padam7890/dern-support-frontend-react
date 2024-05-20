@@ -9,6 +9,11 @@ import Thead from "../../Components/Table/Thead";
 import { NavLink } from "react-router-dom";
 import http from "../../Utils/http";
 import useRequest from "../../CustomHooks/repairrequest";
+import ReactPaginate from "react-paginate";
+import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
+// import 'react-paginate/dist/react-paginate.css'; // Import default CSS
+
 const RequestIndex = () => {
   const nav = useNavigate();
   const {
@@ -17,14 +22,14 @@ const RequestIndex = () => {
     isLoading,
     error,
     fetchRequestLists,
+    handlePageClick,
+    pageCount,
+    searchRequests,
   } = useRequest();
   const [loading, setLoading] = useState(false);
+  const { user, userloading, usererror } = useSelector((state) => state.user);
 
-  const handleclick = () => {
-    nav("/request/create");
-  };
-
-  if (isLoading) {
+  if (userloading || isLoading) {
     return <ClipLoader color={"#008000"} size={40} />;
   }
 
@@ -32,44 +37,43 @@ const RequestIndex = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log(requestList);
+
+
+  const handleclick = () => {
+    nav("/request/create");
+  };
+
+  const deleterequest = async (id) => {
+    try {
+      const datadelte = await http.delete(`/request/${id}`);
+      console.log(datadelte);
+      toast.success("Request deleted successfully");
+      fetchRequestLists();
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
-    <div className=" relative w-full h-full">
-      <ToastContainer />
-
-      <div className=" flex items-center justify-between">
+    <div className="relative w-full h-full">
+      <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold mb-4">Request/Repair List</h2>
         <Button
           type="button"
           onClick={handleclick}
-          className=" bg-green-700 hover:bg-green-900"
+          className="bg-green-700 hover:bg-green-900"
         >
           Create Request & Repair
         </Button>
       </div>
 
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <TableHeading
-          //   items={bannerList}
-          //   setItems={setBannerList}
-          //   fetchItemList={fetchBannerList}
-          searchfor={"title"}
-        />
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <TableHeading searchRequests={searchRequests} />
         <Table>
           <Thead>
             <tr>
-              <th scope="col" class="p-4">
-                {/* <div class="flex items-center">
-                <input
-                  id="checkbox-all-search"
-                  type="checkbox"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label for="checkbox-all-search" class="sr-only">
-                  checkbox
-                </label>
-              </div> */}
+              <th scope="col" className="p-4">
                 SR. Id
               </th>
               <th scope="col">Name</th>
@@ -82,65 +86,59 @@ const RequestIndex = () => {
             </tr>
           </Thead>
           <tbody>
-            {requestList.map((value, index) => (
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="w-4 p-4">
-                  {value.id}
-                  {/* {index + 1 + "."} */}
-                  {/* <div class="flex items-center">
-               <input
-                 id="checkbox-table-search-1"
-                 type="checkbox"
-                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-               />
-               <label for="checkbox-table-search-1" class="sr-only">
-                 checkbox
-               </label>
-             </div> */}
-                </td>
-
-                <td className="px-4 py-4"> {value.user.name} </td>
-                <td className="px-4 py-4"> {value.user.userType} </td>
-                <td className="px-4 py-4"> {value.description}</td>
-                <td className="px-4 py-4"> {value.status}</td>
+            {requestList.map((value) => (
+              <tr
+                key={value.id}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <td className="w-4 p-4">{value.id}</td>
+                <td className="px-4 py-4">{value.user.name}</td>
+                <td className="px-4 py-4">{value.user.userType}</td>
+                <td className="px-4 py-4">{value.description}</td>
+                <td className="px-4 py-4">{value.status}</td>
                 <td className="px-4 py-4">
-                  {value?.repairjob.map((val) => val.productName)}
+                  {value.repairjob.map((val) => val.productName).join(", ")}
                 </td>
                 <td className="px-4 py-4">
-                  {" "}
-                  {value?.repairjob.map((val) => val.status)}
+                  {value.repairjob.map((val) => val.status).join(", ")}
                 </td>
-                <NavLink to={`/Request/view/${value.id}`}>
-                  <Button
-                    href="#"
-                    className=" bg-green-500  font-light text-center text-xs"
-                  >
-                    View
-                  </Button>
-                </NavLink>
-
-                {/* <td className=" px-4 py-4 flex gap-2 items-center">
-           <NavLink to={``}>
-             <Button
-               href="#"
-               className=" bg-green-500  font-light text-center text-xs"
-             >
-               Edit
-             </Button>
-           </NavLink>
-
-           <Button
-             onClick={""}
-             href="#"
-             className=" bg-red-500  font-light text-center text-xs"
-           >
-             Delete
-           </Button>
-         </td> */}
+                <td className="px-4 py-4">
+                  <NavLink to={`/Request/view/${value.id}`}>
+                    <Button className="bg-green-500 font-light text-center text-xs">
+                      View
+                    </Button>
+                  </NavLink>
+                  {user.roles[0].name === "admin" && (
+                    <Button
+                      onClick={() => deleterequest(value.id)}
+                      className="bg-red-500 font-light text-center text-xs"
+                    >
+                      Delete
+                    </Button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
         </Table>
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={1}
+          pageCount={pageCount} // Replace with the actual number of pages
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+          marginPagesDisplayed={2}
+          containerClassName="pagination justify-content-center my-4"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          activeClassName="active"
+        />
       </div>
     </div>
   );

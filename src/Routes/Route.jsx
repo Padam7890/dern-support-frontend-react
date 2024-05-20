@@ -8,6 +8,7 @@ import RequestIndex from "../Pages/Request/RequestIndex";
 import ViewRequest from "../Pages/Request/ViewRequest";
 import RepairIndex from "../Pages/RepairJob/RepairIndex";
 import RepairView from "../Pages/RepairJob/RepairView";
+import ArticleIndex from "../Pages/Articles/ArticleIndex";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/repair/view/:id",
         element: <RepairView/>,
+      },
+      {
+        path: "/articles",
+        element: <ArticleIndex/>,
       },
      ]
   },

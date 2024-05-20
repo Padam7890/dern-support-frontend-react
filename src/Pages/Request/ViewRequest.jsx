@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import parse from "html-react-parser";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
 import http from "../../Utils/http";
@@ -11,11 +11,26 @@ import Input from "../../Components/Input";
 import TextArea from "../../Components/TextArea";
 import Button from "../../Components/Button";
 import { number, object, string } from "yup";
+import Select from "react-select";
+import status from "./Status";
+import Ratings from "../../Components/Ratings";
+import { useSelector } from "react-redux";
 
 const ViewRequest = () => {
   const { id } = useParams();
   const [request, setRequestDetails] = useState();
   const [loading, setLoading] = useState(true);
+
+  const { user, userloading, usererror } = useSelector((state) => state.user);
+
+  if (userloading) {
+    return <ClipLoader color={"#008000"} size={40} />;
+  }
+  if (usererror) {
+    return <div>Error: {usererror.message}</div>;
+  }
+
+  console.log(user);
 
   useEffect(() => {
     getRequestDetails();
@@ -23,28 +38,37 @@ const ViewRequest = () => {
 
   const formik = useFormik({
     initialValues: {
-      rating :'',
-      feedback:''
-
+      status: "",
     },
     validationSchema: object({
-      rating: number()
-       .required("Please enter a rating"),
-      feedback: string()
-       .required("Please enter a feedback"),
-
+      status: string().required("Please enter a Status"),
     }),
     onSubmit: (values) => {
       console.log(values);
-     
+      updatestatus(values);
     },
   });
+
+  const updatestatus = async (data) => {
+    try {
+      setLoading(true);
+      const res = await http.patch(`/request/status/${id}`, data);
+      console.log(res);
+      getRequestDetails();
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getRequestDetails = async () => {
     try {
       setLoading(true);
       const res = await http.get(`/request/${id}`);
       const dataget = res.data.data;
+      console.log(dataget);
       setRequestDetails(dataget);
     } catch (error) {
       console.log(error.response.data.message);
@@ -54,8 +78,6 @@ const ViewRequest = () => {
     }
   };
 
-  const converteddesc = request?.description && parse(request.description);
-
   return (
     <div className=" relative h-full bg-white pl-9 ">
       {loading && (
@@ -64,8 +86,6 @@ const ViewRequest = () => {
         </div>
       )}
       <div className=" flex flex-col justify-start  items-start gap-4 relative ">
-        <ToastContainer />
-
         <div className=" flex gap-5 justify-start ">
           <DetailPage
             pageTitle="Request Details"
@@ -73,7 +93,7 @@ const ViewRequest = () => {
             detailItems={[
               {
                 label: "Descrption",
-                value: `${converteddesc?.props?.children}`,
+                value: `${request?.description}`,
               },
               { label: "Status", value: `${request?.status}` },
             ]}
@@ -108,46 +128,54 @@ const ViewRequest = () => {
           )}
         </div>
 
-        {request && request.status === "Submitted"  && (
-          <div className=" border p-5 shadow rounded-lg ">
+        {user && user?.roles[0].name !== "customer" && (
+          <div className="w-full">
+            <h3>Status Update</h3>
             <form
               encType="multipart/form-data"
-              className=" max-w-2xl mx-auto w-full "
+              className="max-w-2xl w-full"
               onSubmit={formik.handleSubmit}
             >
-              <Input
-                title="Your Rating"
-                type="number"
-                formik={formik}
-                id="rating"
-                name="rating"
-                value={formik.values.rating}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                placeholder="Your Rating"
-              />
+              <Select
+                name="stock_type"
+                id="stock_type"
+                options={status}
+                onChange={(status) => {
+                  formik.setFieldValue("status", status.value);
+                }}
+                value={status.find(
+                  (option) => option.value === formik.values.status
+                )}
+                className="mt-2"
+              >
+                <option value="" disabled>
+                  Select a status type
+                </option>
 
-              <TextArea
-                title="Your Feedback"
-                formik={formik}
-                placeholder={"Your description...."}
-                name="feedback"
-                id="feedback"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                rows={10}
-                value={formik.values.feedback}
-                cols={100}
-              />
+                {status.map((val) => (
+                  <option key={val} value={val}>
+                    {val}
+                  </option>
+                ))}
+              </Select>
+              {formik.touched.status && formik.errors.status ? (
+                <div className="text-red-500 mt-1 text-xs ">
+                  {formik.errors.status}
+                </div>
+              ) : null}
               <Button
                 type="submit"
-                className=" mt-5 bg-pink-500 hover:bg-pink-600"
+                className="mt-5 bg-pink-500 hover:bg-pink-600"
               >
-                Send
+                Submit
               </Button>
             </form>
           </div>
         )}
+
+        {request &&
+          user?.roles[0].name === "customer" &&
+          request?.status === "Completed" && <Ratings />}
       </div>
     </div>
   );
