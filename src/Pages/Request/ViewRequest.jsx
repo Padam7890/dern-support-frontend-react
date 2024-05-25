@@ -15,6 +15,8 @@ import Select from "react-select";
 import status from "./Status";
 import Ratings from "../../Components/Ratings";
 import { useSelector } from "react-redux";
+import Quatation from "./Quatation";
+import UserAcceptQo from "./UserAcceptQo";
 
 const ViewRequest = () => {
   const { id } = useParams();
@@ -77,6 +79,7 @@ const ViewRequest = () => {
       setLoading(false);
     }
   };
+  console.log(request);
 
   return (
     <div className=" relative h-full bg-white pl-9 ">
@@ -88,8 +91,8 @@ const ViewRequest = () => {
       <div className=" flex flex-col justify-start  items-start gap-4 relative ">
         <div className=" flex gap-5 justify-start ">
           <DetailPage
-            pageTitle="Request Details"
-            pageDesc="Details about the Requests."
+            pageTitle="Quotation Details"
+            pageDesc="Details about the Quotation."
             detailItems={[
               {
                 label: "Descrption",
@@ -128,54 +131,97 @@ const ViewRequest = () => {
           )}
         </div>
 
-        {user && user?.roles[0].name !== "customer" && (
-          <div className="w-full">
-            <h3>Status Update</h3>
-            <form
-              encType="multipart/form-data"
-              className="max-w-2xl w-full"
-              onSubmit={formik.handleSubmit}
-            >
-              <Select
-                name="stock_type"
-                id="stock_type"
-                options={status}
-                onChange={(status) => {
-                  formik.setFieldValue("status", status.value);
-                }}
-                value={status.find(
-                  (option) => option.value === formik.values.status
-                )}
-                className="mt-2"
-              >
-                <option value="" disabled>
-                  Select a status type
-                </option>
+        {request?.Quotation?.status === "Pending" ||
+        request?.Quotation?.status === "Rejected"
+         &&
+          user &&
+          user?.roles[0]?.name === "customer" && (
+            <div>
+              <DetailPage
+                pageTitle="Quotation  Request"
+                pageDesc="Quotation Request details. It has Product and price that will cost for Repairing your product."
+                detailItems={[
+                  {
+                    label: "Product Name",
+                    value: `${request?.Quotation?.productName}`,
+                  },
 
-                {status.map((val) => (
-                  <option key={val} value={val}>
-                    {val}
-                  </option>
-                ))}
-              </Select>
-              {formik.touched.status && formik.errors.status ? (
-                <div className="text-red-500 mt-1 text-xs ">
-                  {formik.errors.status}
-                </div>
-              ) : null}
-              <Button
-                type="submit"
-                className="mt-5 bg-pink-500 hover:bg-pink-600"
+                  {
+                    label: "Status",
+                    value: `
+                  ${request?.Quotation?.status}
+                  `,
+                  },
+                  {
+                    label: "Price",
+                    value: `
+                  ${request?.Quotation?.price}
+                  `,
+                  },
+                ]}
+              />
+
+              <div className=" mt-5">
+                <UserAcceptQo
+                  id={request?.Quotation?.id}
+                  supportRequestId={id}
+                />
+              </div>
+            </div>
+          )}
+
+        {user && user?.roles[0]?.name !== "customer" && (
+          <div className=" flex flex-col w-full gap-8">
+            <div className="w-full">
+              <h3>Status Update</h3>
+              <form
+                encType="multipart/form-data"
+                className="max-w-2xl w-full"
+                onSubmit={formik.handleSubmit}
               >
-                Submit
-              </Button>
-            </form>
+                <Select
+                  name="stock_type"
+                  id="stock_type"
+                  options={status}
+                  onChange={(status) => {
+                    formik.setFieldValue("status", status.value);
+                  }}
+                  value={status.find(
+                    (option) => option.value === formik.values.status
+                  )}
+                  className="mt-2"
+                >
+                  <option value="" disabled>
+                    Select a status type
+                  </option>
+
+                  {status.map((val) => (
+                    <option key={val} value={val}>
+                      {val}
+                    </option>
+                  ))}
+                </Select>
+                {formik.touched.status && formik.errors.status ? (
+                  <div className="text-red-500 mt-1 text-xs ">
+                    {formik.errors.status}
+                  </div>
+                ) : null}
+                <Button
+                  type="submit"
+                  className="mt-5 bg-pink-500 hover:bg-pink-600"
+                >
+                  Update
+                </Button>
+              </form>
+            </div>
+
+            {request?.status === "Accepted"  && <Quatation id={id} />}
           </div>
         )}
 
         {request &&
           user?.roles[0].name === "customer" &&
-          request?.status === "Completed" && <Ratings />}
+          request?.status === "Accepted" && <Ratings />}
       </div>
     </div>
   );

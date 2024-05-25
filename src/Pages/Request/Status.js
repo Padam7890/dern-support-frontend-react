@@ -4,17 +4,14 @@ const status = [
     label: "Submitted",
   },
   {
-    value: "Scheduled",
-    label: "Scheduled",
+    value: "Accepted",
+    label: "Accepted",
   },
   {
-    value: "InProgress",
-    label: "InProgress",
+    value: "Rejected",
+    label: "Rejected",
   },
-  {
-    value: "Completed",
-    label: "Completed",
-  },
+
 ];
 
 

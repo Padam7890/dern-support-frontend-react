@@ -1,3 +1,4 @@
+
 import React from "react";
 import { FaUserGroup } from "react-icons/fa6";
 import { IoTicket } from "react-icons/io5";
@@ -12,7 +13,7 @@ import { FiBookOpen } from "react-icons/fi";
 
 const navmenu = [
   {
-    name: "Request",
+    name: "Request Quotation",
     path: "/Request",
     icon: <IoTicket size={20} />,
   },
@@ -28,20 +29,20 @@ const navmenu = [
     path: "/articles",
     icon: <FiBookOpen size={20} />,
   },
-  {
-    name: "Customer",
-    path: "/",
-    icon: <FaUserGroup size={20} />,
-  },
+  // {
+  //   name: "Customer",
+  //   path: "/",
+  //   icon: <FaUserGroup size={20} />,
+  // },
  
   {
     name: "Spare Part",
-    path: "/",
+    path: "/sparePart",
     icon: <FaComputer size={20} />,
   },
   {
     name: "Job Management",
-    path: "/",
+    path: "/dailyJob",
     icon: <MdWork size={20} />,
   },
   {
@@ -52,3 +53,5 @@ const navmenu = [
 ];
 
 export { navmenu };
+
+

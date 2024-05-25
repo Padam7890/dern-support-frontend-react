@@ -1,3 +1,5 @@
+// © 2024 Padam Thapa. All rights reserved.
+
 import React from "react";
 import TableHeading from "../../Components/Table/TableHeading";
 import Table from "../../Components/Table/Table";
@@ -10,9 +12,14 @@ import { ClipLoader } from "react-spinners";
 import http from "../../Utils/http";
 import { toast } from "react-toastify";
 
+import { BsArrowRight } from "react-icons/bs";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
+
 const ArticleIndex = () => {
   const nav = useNavigate();
-  
+  const { user, userloading, usererror } = useSelector((state) => state.user);
 
   const {
     articlesList,
@@ -48,6 +55,16 @@ const ArticleIndex = () => {
     }
   };
 
+  const readMore = (value) => {
+    nav(`/article/view/${value}`);
+  };
+
+  const edit = (value) => {
+    nav(`/article/edit/${value}`);
+  };
+
+  console.log(articlesList);
+
   return (
     <div className=" relative w-full h-full">
       <div className=" flex items-center justify-between">
@@ -64,73 +81,63 @@ const ArticleIndex = () => {
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <TableHeading searchRequests={searchRequests} />
         <Table>
-          <Thead>
-            <tr>
-              <th scope="col" class="p-4">
-                {/* <div class="flex items-center">
-              <input
-                id="checkbox-all-search"
-                type="checkbox"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label for="checkbox-all-search" class="sr-only">
-                checkbox
-              </label>
-            </div> */}
-                No.
-              </th>
-              <th scope="col">Title</th>
-              <th scope="col">Content</th>
-              <th scope="col">Action</th>
-            </tr>
-          </Thead>
-          <tbody>
+          <div className="ml-4 grid gap-2 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {articlesList.map((article, index) => (
-              <tr key={article.id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td className="w-4 p-4">1.</td>
-                <td>{article.title}</td>
-                <td>{article.content}</td>
-
-                <td className=" max-w-24">
-                  <NavLink to={`/article/edit/${article.id}`}>
+              <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                  <img
+                    class="rounded-t-lg h-48 w-full object-cover"
+                    src={article.image}
+                    alt=""
+                  />
+                </a>
+                <div class="p-5">
+                  <a href="#">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      {article.title}
+                    </h5>
+                  </a>
+                  <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                    {`${article.content.slice(0, 200)} ...`}
+                  </p>
+                  <div className="flex gap-0   flex-wrap ">
                     <Button
-                      href="#"
-                      className=" bg-green-500  font-light text-center text-xs"
+                      type="button"
+                      title="Read More"
+                      onClick={() => readMore(article.id)}
+                      className=" bg-green-500 flex items-center gap-2 hover:bg-green-600"
                     >
-                      Edit
+                      More
+                      <BsArrowRight size={20} />
                     </Button>
-                  </NavLink>
+                    {user?.roles[0]?.name === "admin" && (
+                      <div className=" flex">
+                        <Button
+                          type="button"
+                          title="Read More"
+                          onClick={() => edit(article.id)}
+                          className=" bg-pink-500 flex gap-2 items-center hover:bg-pink-600"
+                        >
+                          Edit
+                          <FaRegEdit size={12} />
+                        </Button>
 
-                  <Button
-                    onClick={()=> deleteArticle(article.id)}
-                    href="#"
-                    className=" bg-red-500  font-light text-center text-xs"
-                  >
-                    Delete
-                  </Button>
-                </td>
-
-                {/* <td className=" px-4 py-4 flex gap-2 items-center">
-        <NavLink to={``}>
-          <Button
-            href="#"
-            className=" bg-green-500  font-light text-center text-xs"
-          >
-            Edit
-          </Button>
-        </NavLink>
-
-        <Button
-          onClick={""}
-          href="#"
-          className=" bg-red-500  font-light text-center text-xs"
-        >
-          Delete
-        </Button>
-      </td> */}
-              </tr>
+                        <Button
+                          type="button"
+                          title="Read More"
+                          onClick={() => deleteArticle(article.id)}
+                          className=" bg-red-500 flex gap-2 items-center hover:bg-red-600"
+                        >
+                          Delete
+                          <MdDelete />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             ))}
-          </tbody>
+          </div>
         </Table>
 
         <ReactPaginate
@@ -157,3 +164,5 @@ const ArticleIndex = () => {
 };
 
 export default ArticleIndex;
+
+// © 2024 Padam Thapa. All rights reserved.

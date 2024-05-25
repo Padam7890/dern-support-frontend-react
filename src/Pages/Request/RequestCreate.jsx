@@ -53,7 +53,7 @@ const RequestCreate = () => {
       >
         <div className="mb-5 w-full">
           <TextArea
-          title={"Message"}
+          title={"Quotation"}
             id="description"
             formik={formik}
             name={"description"}
@@ -65,7 +65,7 @@ const RequestCreate = () => {
             placeholder="Leave a Message..."
           />
         </div>
-        <div className={`flex flex-col gap-4`}>
+        {/* <div className={`flex flex-col gap-4`}>
           <Input
             divclassName="flex mb-0 gap-4 "
             className={` max-w-4 mb-2`}
@@ -118,7 +118,7 @@ const RequestCreate = () => {
               />
             </div>
           )}
-        </div>
+        </div> */}
 
         <Button type="submit" className=" mt-5 bg-pink-500 hover:bg-pink-600">
           {isLoading ? "Submitting... Wait" : "Submit"}

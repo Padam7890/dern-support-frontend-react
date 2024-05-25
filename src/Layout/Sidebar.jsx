@@ -1,3 +1,5 @@
+// © 2024 Padam Thapa. All rights reserved.
+
 import React, { useEffect } from "react";
 import { navmenu } from "./Navbar";
 import { FaRegUser } from "react-icons/fa6";
@@ -146,3 +148,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+// © 2024 Padam Thapa. All rights reserved.

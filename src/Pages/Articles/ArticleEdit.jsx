@@ -8,16 +8,19 @@ import TextArea from "../../Components/TextArea";
 import Button from "../../Components/Button";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import sendata from "./formdata";
 
 const ArticleEdit = () => {
   const { id } = useParams();
   const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [image, setImage] = useState();
 
   const formik = useFormik({
     initialValues: {
       title: "",
       content: "",
+      image: "",
     },
     validationSchema: object({
       title: string().required("Title is required"),
@@ -25,7 +28,8 @@ const ArticleEdit = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-      sendarticle(values);
+      const data = sendata(values)
+      sendarticle(data);
     },
   });
 
@@ -57,6 +61,9 @@ const ArticleEdit = () => {
       console.log(data);
       formik.setFieldValue("title", data.title);
       formik.setFieldValue("content", data.content);
+      formik.setFieldValue("newimage", data.image);
+      setImage(data.image);
+
     } catch (error) {
       console.log(error);
     } finally {
@@ -106,6 +113,21 @@ const ArticleEdit = () => {
               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               placeholder="Content of descrption..."
             />
+          </div>
+
+          <Input
+            title="Image"
+            type="file"
+            formik={formik}
+            id="image"
+            name="image"
+            onChange={(event) => {
+              formik.setFieldValue("image", event.currentTarget.files[0]);
+            }}
+            accept="image/*"
+          />
+          <div className="showimage">
+            <img src={image} alt="" />
           </div>
 
           <Button type="submit" className=" mt-5 bg-pink-500 hover:bg-pink-600">

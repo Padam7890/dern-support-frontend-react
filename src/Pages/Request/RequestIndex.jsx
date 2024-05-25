@@ -54,17 +54,18 @@ const RequestIndex = () => {
       toast.error(error.response.data.message);
     }
   };
+  console.log(requestList)
 
   return (
     <div className="relative w-full h-full">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold mb-4">Request/Repair List</h2>
+        <h2 className="text-2xl font-semibold mb-4">Quotation List</h2>
         <Button
           type="button"
           onClick={handleclick}
           className="bg-green-700 hover:bg-green-900"
         >
-          Create Request & Repair
+          Create Quotation
         </Button>
       </div>
 
@@ -80,13 +81,15 @@ const RequestIndex = () => {
               <th scope="col">UserType</th>
               <th scope="col">Description</th>
               <th scope="col">Status</th>
-              <th scope="col">Repair Item</th>
-              <th scope="col">Repair Status</th>
+              <th scope="col">Quatation Status</th>
+              <th scope="col">Repair Item </th>
+              <th scope="col">Repair Status </th>
+
               <th scope="col">Action</th>
             </tr>
           </Thead>
           <tbody>
-            {requestList.map((value) => (
+            {requestList?.map((value) => (
               <tr
                 key={value.id}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -96,6 +99,8 @@ const RequestIndex = () => {
                 <td className="px-4 py-4">{value.user.userType}</td>
                 <td className="px-4 py-4">{value.description}</td>
                 <td className="px-4 py-4">{value.status}</td>
+                <td className="px-4 py-4">{value.Quotation?.status}</td>
+
                 <td className="px-4 py-4">
                   {value.repairjob.map((val) => val.productName).join(", ")}
                 </td>

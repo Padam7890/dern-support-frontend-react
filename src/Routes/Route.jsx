@@ -11,46 +11,71 @@ import RepairView from "../Pages/RepairJob/RepairView";
 import ArticleIndex from "../Pages/Articles/ArticleIndex";
 import ArticleCrreate from "../Pages/Articles/ArticleCrreate";
 import ArticleEdit from "../Pages/Articles/ArticleEdit";
+import SpareCreate from "../Pages/Sparepart/SpareCreate";
+import ViewArticle from "../Pages/Articles/ViewArticle";
+import SpareIndex from "../Pages/Sparepart/SpareIndex";
+import SpareEdit from "../Pages/Sparepart/SpareEdit";
+import JobIndex from "../Pages/JobManagement/JobIndex";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-     children:[
+    children: [
       {
         path: "/Request/create",
-        element: <RequestCreate/>,
+        element: <RequestCreate />,
       },
       {
         path: "/Request",
-        element: <RequestIndex/>,
+        element: <RequestIndex />,
       },
-  
+
       {
         path: "/Request/view/:id",
-        element: <ViewRequest/>,
+        element: <ViewRequest />,
       },
       {
         path: "/repair",
-        element: <RepairIndex/>,
+        element: <RepairIndex />,
       },
       {
         path: "/repair/view/:id",
-        element: <RepairView/>,
+        element: <RepairView />,
       },
       {
         path: "/articles",
-        element: <ArticleIndex/>,
+        element: <ArticleIndex />,
       },
       {
         path: "/article/create",
-        element: <ArticleCrreate/>,
+        element: <ArticleCrreate />,
       },
       {
         path: "/article/edit/:id",
-        element: <ArticleEdit/>,
+        element: <ArticleEdit />,
       },
-     ]
+      {
+        path: "/article/view/:id",
+        element: <ViewArticle />,
+      },
+      {
+        path: "/sparePart",
+        element: <SpareIndex />,
+      },
+      {
+        path: "/sparePart/create",
+        element: <SpareCreate />,
+      },
+      {
+        path: "/sparePart/edit/:id",
+        element: <SpareEdit />,
+      },
+      {
+        path: "/dailyJob",
+        element: <JobIndex />,
+      },
+    ],
   },
   {
     path: "/register",
@@ -60,13 +85,11 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  
-  
+
   {
     path: "/*",
-    element: <NotfoundPage/>,
-  }
-
+    element: <NotfoundPage />,
+  },
 ]);
 
 export { router };

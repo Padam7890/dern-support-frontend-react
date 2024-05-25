@@ -8,14 +8,6 @@ const useRepairView = () => {
   const [repairList, setrepairList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const {
-    pageCount,
-    currentPage,
-    pageSize,
-    handlePageClick,
-    updatePageCount,
-    updatePageSize,
-  } = usePagination();
 
   useEffect(() => {
     fetchRepairLists();

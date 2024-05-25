@@ -1,12 +1,16 @@
+// © 2024 Padam Thapa. All rights reserved.
+
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import TextArea from "../../Components/TextArea";
 import Input from "../../Components/Input";
 import Button from "../../Components/Button";
-import { object, string } from "yup";
+import { mixed, object, string } from "yup";
 import http from "../../Utils/http";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { ClipLoader } from "react-spinners";
+import sendata from "./formdata";
 
 const ArticleCrreate = () => {
   const nav = useNavigate();
@@ -16,18 +20,21 @@ const ArticleCrreate = () => {
     initialValues: {
       title: "",
       content: "",
+      image: "",
     },
     validationSchema: object({
       title: string().required("Please enter a title"),
       content: string().required("Please enter a content"),
+      image: mixed().required("Please enter a image"),
     }),
     onSubmit: (values) => {
       console.log(values);
-      senddata(values);
+      const data = sendata(values);
+      senddatas(data);
     },
   });
 
-  const senddata = async (data) => {
+  const senddatas = async (data) => {
     try {
       setIsLoading(true);
       const res = await http.post("/articles", data);
@@ -36,7 +43,7 @@ const ArticleCrreate = () => {
       console.log(datas);
       toast.success("article created successfully");
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(error);
       toast.error(error.response.data.message);
     } finally {
       setIsLoading(false);
@@ -85,6 +92,18 @@ const ArticleCrreate = () => {
             />
           </div>
 
+          <Input
+            title="Image"
+            type="file"
+            formik={formik}
+            id="image"
+            name="image"
+            onChange={(event) => {
+              formik.setFieldValue("image", event.currentTarget.files[0]);
+            }}
+            accept="image/*"
+          />
+
           <Button type="submit" className=" mt-5 bg-pink-500 hover:bg-pink-600">
             {isLoading ? "Submitting... Wait" : "Submit"}
           </Button>
@@ -95,3 +114,5 @@ const ArticleCrreate = () => {
 };
 
 export default ArticleCrreate;
+
+// © 2024 Padam Thapa. All rights reserved.
