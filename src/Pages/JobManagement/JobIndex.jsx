@@ -52,12 +52,12 @@ const JobIndex = () => {
               </label>
             </div> */}
               
-              <th scope="col">AssignedTo</th>
+              <th scope="col" className="p-4">AssignedTo</th>
               <th scope="col">Date</th>
               <th scope="col">Priority</th>
               <th scope="col">Repair Product</th>
               <th scope="col">Customer Name</th>
-              <th scope="col">Action</th>
+              {/* <th scope="col">Action</th> */}
             </tr>
           </Thead>
           <tbody>
@@ -72,7 +72,7 @@ const JobIndex = () => {
                 <td className="px-4 py-4">{dailyJob.priority || "Medium"}</td>
                 <td className="px-4 py-4">{dailyJob.repairJob?.productName} </td>
                 <td className="px-4 py-4">{dailyJob.repairJob?.supportRequest?.user?.name}</td>
-                <td className=" max-w-24">
+                {/* <td className=" max-w-24">
                   <NavLink to={`/repair/view/`}>
                     <Button
                       href="#"
@@ -89,7 +89,7 @@ const JobIndex = () => {
                   >
                     Delete
                   </Button>
-                </td>
+                </td> */}
 
                 {/* <td className=" px-4 py-4 flex gap-2 items-center">
                 <NavLink to={``}>

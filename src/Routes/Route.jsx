@@ -16,6 +16,11 @@ import ViewArticle from "../Pages/Articles/ViewArticle";
 import SpareIndex from "../Pages/Sparepart/SpareIndex";
 import SpareEdit from "../Pages/Sparepart/SpareEdit";
 import JobIndex from "../Pages/JobManagement/JobIndex";
+import Users from "../Pages/User/Users";
+import Profile from "../Pages/User/Profile";
+import Changepass from "../Pages/User/Changepass";
+import Forgetpass from "../Pages/User/Forgetpass";
+import Resetpass from "../Pages/User/Resetpass";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +80,18 @@ const router = createBrowserRouter([
         path: "/dailyJob",
         element: <JobIndex />,
       },
+      {
+        path: "/userLists",
+        element: <Users />,
+      },
+      {
+        path: "/userinfo",
+        element: <Profile />,
+      },
+      {
+        path: "/changePassword",
+        element: <Changepass />,
+      },
     ],
   },
   {
@@ -84,6 +101,18 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/forgetpassword",
+    element: <Forgetpass />,
+  },
+  {
+    path: "/resetpass",
+    element: <Resetpass />,
+  },
+  {
+    path: "/auth/resetpassword/:token",
+    element: <Resetpass />,
   },
 
   {

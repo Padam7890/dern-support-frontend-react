@@ -69,13 +69,15 @@ const ArticleIndex = () => {
     <div className=" relative w-full h-full">
       <div className=" flex items-center justify-between">
         <h2 className="text-2xl font-semibold mb-4">Articles List</h2>
-        <Button
-          type="button"
-          onClick={handleclick}
-          className=" bg-green-700 hover:bg-green-900"
-        >
-          Create Articles
-        </Button>
+        {user.roles[0].name === "admin" && (
+          <div>
+            <Button
+              type="button"
+              onClick={handleclick}
+              className=" bg-green-700 hover:bg-green-900"
+            >Create Article</Button>
+          </div>
+        )}
       </div>
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

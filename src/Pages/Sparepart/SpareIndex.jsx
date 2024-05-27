@@ -47,7 +47,7 @@ const SpareIndex = () => {
           onClick={handleClick}
           className=" bg-green-700 hover:bg-green-900"
         >
-          Create Request & Repair
+          Create Spare
         </Button>
       </div>
 
@@ -56,7 +56,7 @@ const SpareIndex = () => {
         <Table>
           <Thead>
             <tr>
-              <th scope="col">Name</th>
+              <th scope="col" className="p-4">Name</th>
               <th scope="col">Price</th>
               <th scope="col">Quantity</th>
               <th scope="col">Weight</th>
@@ -70,7 +70,7 @@ const SpareIndex = () => {
                 key={spareparts.id}
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
-                <td class="w-4 p-4">{spareparts.name}</td>
+                <td className="px-4 py-4">{spareparts.name}</td>
 
                 <td className="px-4 py-4">{spareparts.price}</td>
                 <td className="px-4 py-4">{spareparts.quantity}</td>
