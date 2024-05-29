@@ -21,12 +21,17 @@ import Profile from "../Pages/User/Profile";
 import Changepass from "../Pages/User/Changepass";
 import Forgetpass from "../Pages/User/Forgetpass";
 import Resetpass from "../Pages/User/Resetpass";
+import Index from "../Pages/Dashboard/Index";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
+      {
+        path: "/",
+        element: <Index />,
+      },
       {
         path: "/Request/create",
         element: <RequestCreate />,
