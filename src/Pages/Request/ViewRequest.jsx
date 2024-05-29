@@ -57,6 +57,7 @@ const ViewRequest = () => {
       const res = await http.patch(`/request/status/${id}`, data);
       console.log(res);
       getRequestDetails();
+      
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -131,9 +132,7 @@ const ViewRequest = () => {
           )}
         </div>
 
-        {request?.Quotation?.status === "Pending" ||
-        request?.Quotation?.status === "Rejected"
-         &&
+        {request?.Quotation?.status === "Pending"          &&
           user &&
           user?.roles[0]?.name === "customer" && (
             <div>

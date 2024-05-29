@@ -19,7 +19,6 @@ const RequestCreate = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
-      //   const data = bannerdata(values);
       apisendata(values);
     },
   });
@@ -62,7 +61,7 @@ const RequestCreate = () => {
             value={formik.values.description}
             rows="6"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            placeholder="Leave a Message..."
+            placeholder="Leave a message... Example: I need the Dell 5400. Require a quotation for that product."
           />
         </div>
         {/* <div className={`flex flex-col gap-4`}>
