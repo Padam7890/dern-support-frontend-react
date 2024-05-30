@@ -40,7 +40,7 @@ const Login = () => {
     if (isTokenExpired) {
       nav("/login");
     } else if (isAuth && isAuth !== null) {
-      nav("/");
+      nav("/dashboard");
     } else {
       nav("/login");
     }
@@ -67,7 +67,7 @@ const Login = () => {
         expires: 7,
       });
       console.log(res);
-      nav("/");
+      nav("/dashboard");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
