@@ -28,7 +28,7 @@ const UserAcceptQo = ({ supportRequestId, id, }) => {
       try {
         const res = await http.put(`quotation/${id}`, values);
         toast.success(res.data.message);
-        nav('/Request')
+        nav('/')
 
       } catch (error) {
         console.log(error)
@@ -37,15 +37,6 @@ const UserAcceptQo = ({ supportRequestId, id, }) => {
     },
   });
 
-  // supportRequestId Int            @unique
-  // productName      String?
-  // address          String?
-  // supportRequest   SupportRequest @relation(fields: [supportRequestId], references: [id])
-  // status           RepairStatus   @default(Scheduled)
-  // scheduledDate    DateTime
-  // dailyJob         DailyJob?
-  // spareparts       SparePart?     @relation(fields: [sparePartId], references: [id])
-  // sparePartId      Int?
 
   const status = [
     { value: "Accepted", label: "Accepted" },
@@ -54,7 +45,7 @@ const UserAcceptQo = ({ supportRequestId, id, }) => {
   console.log(id);
 
   return (
-    <div className=" flex flex-col w-full gap-8">
+    <div className=" flex flex-col w-full  gap-8">
       <div className="w-full">
         <h3 className=" text-xl font-medium">Quatation Update</h3>
         <p className="mt-4">

@@ -13,9 +13,13 @@ import { FiBookOpen } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { FaUsers } from "react-icons/fa6";
+import useDashboard from "../CustomHooks/dashboard";
 
 const Navbar = () => {
+
   const { user, userloading, usererror } = useSelector((state) => state.user);
+  const { dashboardList, setdashboardList, isLoading, error, fetchDashboardLists } =  useDashboard();
+
 
   const navmenu = [
     {
@@ -35,7 +39,7 @@ const Navbar = () => {
       {
         name: "Repair Job",
         path: "/repair",
-        message: 5,
+        message: dashboardList?.repairList || 0,
         icon: <GiAutoRepair size={20} />,
       },
       {

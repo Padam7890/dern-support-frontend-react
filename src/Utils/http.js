@@ -56,12 +56,13 @@ http.interceptors.response.use(
           redirectToLogin();
           return Promise.reject(error);
         }
-      } else if (error.response.status === 404 && error.response.data.message === 'User not found') {
+      } else if (error.response.status === 404 && error.response.data.message === 'User not found' ) {
         // If the user is not found, redirect to login
         console.error('User not found:', error.response.data.message);
         redirectToLogin();
         return Promise.reject(error);
       }
+    
     }
 
     // For other types of errors, reject the promise

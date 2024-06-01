@@ -28,7 +28,7 @@ const RequestCreate = () => {
       const res = await http.post("/request", data);
       console.log(res);
       toast.success(res.data.message);
-      nav('/Request')
+      nav('/')
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);

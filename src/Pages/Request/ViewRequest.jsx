@@ -57,7 +57,6 @@ const ViewRequest = () => {
       const res = await http.patch(`/request/status/${id}`, data);
       console.log(res);
       getRequestDetails();
-      
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -83,14 +82,14 @@ const ViewRequest = () => {
   console.log(request);
 
   return (
-    <div className=" relative h-full bg-white pl-9 ">
+    <div className=" relative h-auto bg-white pl-9 ">
       {loading && (
         <div className="bg-slate-800 bg-opacity-40 w-full h-full absolute z-30 top-0 left-0 flex justify-center items-center">
           <ClipLoader color={"#008000"} size={120} />
         </div>
       )}
       <div className=" flex flex-col justify-start  items-start gap-4 relative ">
-        <div className=" flex gap-5 justify-start ">
+        <div className=" flex gap-5 justify-start  mt-3">
           <DetailPage
             pageTitle="Quotation Details"
             pageDesc="Details about the Quotation."
@@ -132,47 +131,48 @@ const ViewRequest = () => {
           )}
         </div>
 
-        {request?.Quotation?.status === "Pending"          &&
-          user &&
-          user?.roles[0]?.name === "customer" && (
-            <div>
-              <DetailPage
-                pageTitle="Quotation  Request"
-                pageDesc="Quotation Request details. It has Product and price that will cost for Repairing your product."
-                detailItems={[
-                  {
-                    label: "Product Name",
-                    value: `${request?.Quotation?.productName}`,
-                  },
+        {request?.Quotation?.status === "Pending" && (
+          <div className="">
+            <DetailPage
+              pageTitle="Quotation  Request"
+              pageDesc="Quotation Request details. It has Product and price that will cost for Repairing your product."
+              detailItems={[
+                {
+                  label: "Product Name",
+                  value: `${request?.Quotation?.productName}`,
+                },
 
-                  {
-                    label: "Status",
-                    value: `
+                {
+                  label: "Status",
+                  value: `
                   ${request?.Quotation?.status}
                   `,
-                  },
-                  {
-                    label: "Price",
-                    value: `
+                },
+                {
+                  label: "Price",
+                  value: `
                   ${request?.Quotation?.price}
                   `,
-                  },
-                ]}
-              />
+                },
+              ]}
+            />
 
-              <div className=" mt-5">
-                <UserAcceptQo
-                  id={request?.Quotation?.id}
-                  supportRequestId={id}
-                />
-              </div>
+            <div className=" mt-5">
+              <UserAcceptQo id={request?.Quotation?.id} supportRequestId={id} />
             </div>
-          )}
+          </div>
+        )}
 
         {user && user?.roles[0]?.name !== "customer" && (
-          <div className=" flex flex-col w-full gap-8">
-            <div className="w-full">
-              <h3>Status Update</h3>
+          <div className=" flex flex-col  w-full gap-8 mt-6">
+            <div>
+            <h3 className="text-xl mb-0">For Admin Only</h3>
+            <hr className="mt-3" />
+
+            </div>
+        
+            <div className="w-full ">
+              <h3 className="text-xl font-medium mt-5">Status Update</h3>
               <form
                 encType="multipart/form-data"
                 className="max-w-2xl w-full"
@@ -214,7 +214,7 @@ const ViewRequest = () => {
               </form>
             </div>
 
-            {request?.status === "Accepted"  && <Quatation id={id} />}
+            {request?.status === "Accepted" && <Quatation id={id} />}
           </div>
         )}
 

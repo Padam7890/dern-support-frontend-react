@@ -5,11 +5,20 @@ import useDashboard from "../../CustomHooks/dashboard";
 import { GiAutoRepair } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa";
 import { FaComputer } from "react-icons/fa6";
+import { ClipLoader } from "react-spinners";
 
 const Index = () => {
 
   const { dashboardList, setdashboardList, isLoading, error, fetchDashboardLists } =  useDashboard();
   console.log(dashboardList);
+
+  if (isLoading) {
+    return <ClipLoader color={"#008000"} size={40} />;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div>

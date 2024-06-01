@@ -8,8 +8,10 @@ import { initialValues, validationSchema } from "./schema";
 import { toast } from "react-toastify";
 import http from "../../Utils/http";
 import { ClipLoader } from "react-spinners";
+import { useNavigate } from "react-router";
 
 const SpareCreate = () => {
+  const nav = useNavigate();
   const [isLoading, setLoading] = useState(false);
 
   const formik = useFormik({
@@ -37,6 +39,7 @@ const SpareCreate = () => {
       setLoading(true);
       const res = await http.post("/spareParts", values);
       toast.success(res.data.message);
+      nav("/sparepart");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);

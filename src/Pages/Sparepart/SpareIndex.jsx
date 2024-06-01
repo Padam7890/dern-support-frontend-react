@@ -8,6 +8,7 @@ import ReactPaginate from "react-paginate";
 import useSpareParts from "../../CustomHooks/sparepart";
 import http from "../../Utils/http";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const SpareIndex = () => {
   const nav = useNavigate();
@@ -27,6 +28,13 @@ const SpareIndex = () => {
   const handleClick = () => {
     nav("/sparePart/create");
   };
+  if (isLoading) {
+    return <ClipLoader color={"#008000"} size={40} />;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const deleteSpare = async (value) => {
     try {

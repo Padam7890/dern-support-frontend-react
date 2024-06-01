@@ -8,6 +8,7 @@ import ReactPaginate from "react-paginate";
 import { NavLink } from "react-router-dom";
 import Button from "../../Components/Button";
 import useDailyJob from "../../CustomHooks/dailyJob";
+import { ClipLoader } from "react-spinners";
 
 const JobIndex = () => {
   const {
@@ -22,6 +23,14 @@ const JobIndex = () => {
     searchRequests,
   } = useDailyJob();
   console.log(dailyJobList);
+
+  if (isLoading) {
+    return <ClipLoader color={"#008000"} size={40} />;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className=" relative w-full h-full">
