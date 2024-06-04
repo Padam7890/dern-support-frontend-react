@@ -11,8 +11,6 @@ import ReactPaginate from "react-paginate";
 import http from "../../Utils/http";
 
 const Users = () => {
-  const nav = useNavigate();
-  const [permission, setPermission] = useState();
 
   const {
     UserList,

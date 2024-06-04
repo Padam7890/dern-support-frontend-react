@@ -6,9 +6,11 @@ import Button from "../../Components/Button";
 import http from "../../Utils/http";
 import Select from "react-select";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const Quatation = ({ id }) => {
   const [product, setProduct] = useState([]);
+  const [loading,setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -33,12 +35,16 @@ const Quatation = ({ id }) => {
 
   const sendvaluetoapi = async (values) => {
     try {
+      setLoading(true)
       const res = await http.post("/quotation", values);
       console.log(res);
       toast.success(res.data.message);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -63,6 +69,11 @@ const Quatation = ({ id }) => {
   return (
     <div>
       <div className="flex flex-col w-full gap-4">
+      {loading && (
+        <div className="bg-slate-800 bg-opacity-40 w-full h-full absolute z-30 top-0 left-0 flex justify-center items-center">
+          <ClipLoader color={"#008000"} size={120} />
+        </div>
+      )}
         <form onSubmit={formik.handleSubmit}>
           <div className="my-5">
             <label

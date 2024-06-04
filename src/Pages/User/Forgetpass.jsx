@@ -1,12 +1,14 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../Components/Input";
 import { object, string } from "yup";
 import { NavLink } from "react-router-dom";
 import http from "../../Utils/http";
 import { ToastContainer, toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const Forgetpass = () => {
+  const [loading,setLoading] = useState(false)
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -15,13 +17,13 @@ const Forgetpass = () => {
       email: string().required("Please enter valid email"),
     }),
     onSubmit: (values) => {
-      console.log(values);
       apisendata(values);
     },
   });
 
   async function apisendata(values) {
     try {
+      setLoading(true)
       const response = await http.post("/auth/forgetPassword", values);
       console.log(response);
       toast.success(response.data.message);
@@ -29,10 +31,18 @@ const Forgetpass = () => {
       console.log(error);
       toast.error(error.response.data.message);
     }
+    finally{
+      setLoading(false)
+    }
   }
 
   return (
     <div class="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
+       {loading && (
+        <div className="bg-slate-800 bg-opacity-40 w-full h-full absolute z-30 top-0 left-0 flex justify-center items-center">
+          <ClipLoader color={"#008000"} size={120} />
+        </div>
+      )}
       <h1 class="text-4xl font-medium">Reset password</h1>
       <p class="text-slate-500 mt-8">Fill up the form to reset the password</p>
       <ToastContainer />
