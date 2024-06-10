@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 // Create an Axios instance with default configurations
@@ -33,6 +32,7 @@ http.interceptors.response.use(
         try {
           // Get the refresh token from cookies
           const checkCookies = Cookies.get('USER_INFO');
+           console.log(checkCookies);
           if (!checkCookies) {
             // If Cookies is not available, redirect to login
             redirectToLogin();

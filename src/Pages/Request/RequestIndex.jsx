@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 // import 'react-paginate/dist/react-paginate.css'; // Import default CSS
 
 const RequestIndex = () => {
+  const { user} = useSelector((state) => state.user);
+
   const nav = useNavigate();
   const {
     requestList,
@@ -27,9 +29,8 @@ const RequestIndex = () => {
     searchRequests,
   } = useRequest();
   const [loading, setLoading] = useState(false);
-  const { user, userloading, usererror } = useSelector((state) => state.user);
 
-  if (userloading || isLoading) {
+  if (isLoading) {
     return <ClipLoader color={"#008000"} size={40} />;
   }
 

@@ -22,6 +22,7 @@ const ViewRequest = () => {
   const { id } = useParams();
   const [request, setRequestDetails] = useState();
   const [loading, setLoading] = useState(true);
+  const [quatationId, setQuatationId] = useState(); 
 
   const { user, userloading, usererror } = useSelector((state) => state.user);
 
@@ -70,16 +71,20 @@ const ViewRequest = () => {
       setLoading(true);
       const res = await http.get(`/request/${id}`);
       const dataget = res.data.data;
-      console.log(dataget);
+      const quatationId = dataget.Quotation?.id;
+      setQuatationId(quatationId)
+      console.log("data"+ dataget);
       setRequestDetails(dataget);
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(error);
       toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
   };
   console.log(request);
+
+  console.log(`quatation Id ${quatationId}`)
 
   return (
     <div className=" relative h-auto bg-white pl-9 ">
@@ -220,7 +225,7 @@ const ViewRequest = () => {
 
         {request &&
           user?.roles[0].name === "customer" &&
-          request?.status === "Accepted" && <Ratings />}
+          request?.status === "Accepted" && <Ratings quatationId={quatationId} />}
       </div>
     </div>
   );
